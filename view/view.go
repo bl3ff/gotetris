@@ -124,6 +124,10 @@ func (tw *TetrisView) drawAll() {
 
 func (tw *TetrisView) drawTMatrix() {
 	m := tw.Engine.TMatrix
+	if m == nil {
+		return
+	}
+
 	m.RLock()
 	for i := 0; i < m.Rows; i++ {
 		for j := 0; j < m.Cols; j++ {

@@ -49,6 +49,16 @@ func (e *EngineT) InitNewGame() {
 	e.Points = 0
 }
 
+func (e *EngineT) RestartGame() {
+	fmt.Println("New Game Engine")
+	e.TMatrix.Lock()
+	e.TMatrix.Clean()
+	e.TMatrix.Unlock()
+	e.CurrentBlock = model.GenerateRandomBlock(model.Pos{X: model.DefaultX, Y: model.DefaultY})
+	e.Points = 0
+	e.Lose = false
+}
+
 // SendClick sends a click event from the user.
 func (e *EngineT) SendClick(c Click) {
 	e.commandChan <- &c
@@ -61,7 +71,7 @@ func (e *EngineT) SendKey(k Key) {
 
 func (e *EngineT) Start(redraw func()) {
 	fmt.Println("Start Engine")
-	e.newGameChan <- 1
+	e.InitNewGame()
 	e.redrawView = redraw
 
 	go e.loop()
@@ -69,17 +79,24 @@ func (e *EngineT) Start(redraw func()) {
 
 func (e *EngineT) loop() {
 	fmt.Println("Start Engine Loop")
+	ticker := time.NewTicker(time.Duration(e.LoopDelay) * time.Millisecond)
+
 	for {
 		select {
 		case <-e.newGameChan:
-			e.InitNewGame()
+			e.RestartGame()
+			e.redrawView()
+			//e.TMatrix.Print()
 		default:
 		}
 
 		e.TMatrix.Lock()
 
 		if !e.canMoveDown() {
+			fmt.Println("You lose and totalize ", e.Points)
 			e.Lose = true
+			time.Sleep(1 * time.Second)
+			e.newGameChan <- 1
 		}
 
 		e.processInput()
@@ -95,15 +112,14 @@ func (e *EngineT) loop() {
 			if !e.canMoveDown() {
 				e.TMatrix.StoreBlock(e.CurrentBlock)
 				e.Points += 100 * e.TMatrix.Update()
-				e.TMatrix.Print()
+				//e.TMatrix.Print()
 				e.CurrentBlock = model.GenerateRandomBlock(model.Pos{X: model.DefaultX, Y: model.DefaultY})
 			}
 		}
 
 		e.TMatrix.Unlock()
 		e.redrawView()
-		dt := time.Duration(e.LoopDelay) * time.Millisecond
-		time.Sleep(dt)
+		<-ticker.C
 	}
 
 }

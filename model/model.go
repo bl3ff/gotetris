@@ -34,6 +34,12 @@ func GenerateRandomBlock(at Pos) Block {
 	return GenerateBlockByType(BlockType(r.Intn(BlockTypeLen-1)), at)
 }
 
+func (m *TetrisMatrix) Clean() {
+	for i := range m.Matrix {
+		m.Matrix[i] = make([]BlockColor, m.Cols)
+	}
+}
+
 func (m *TetrisMatrix) fit(b Block) bool {
 	for _, p := range b.Pieces {
 		if !m.fitPos(p) {

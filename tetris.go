@@ -22,7 +22,7 @@ func processFlags() error {
 	flag.IntVar(&model.Cols, "cols", 15, "the number of columns in the Labyrinth; must be odd; valid range: 9..99")
 
 	// Control/Engine flags
-	flag.IntVar(&control.LDelay, "loopDelay", 500, "loop delay of the game engine, in milliseconds; valid range: 10..1500")
+	flag.IntVar(&control.LDelay, "loopDelay", 300, "loop delay of the game engine, in milliseconds; valid range: 10..1500")
 	//flag.Float64Var(&control.V, "v", model.BlockSize*2.0, "moving speed of Gopher and the Bulldogs in pixel/sec; valid range: 20..200")
 
 	flag.Parse()

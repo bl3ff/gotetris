@@ -34,7 +34,7 @@ type Key struct {
 func GenerateEngine() *EngineT {
 	engine := &EngineT{
 		LoopDelay:   LDelay,
-		commandChan: make(chan interface{}, 20),
+		commandChan: make(chan interface{}, 30),
 		newGameChan: make(chan int, 1),
 		reDrawChan:  make(chan int, 1),
 	}
@@ -90,8 +90,6 @@ func (e *EngineT) loop() {
 		default:
 		}
 
-		e.TMatrix.Lock()
-
 		if !e.canMoveDown() {
 			fmt.Println("You lose and totalize ", e.Points)
 			e.Lose = true
@@ -100,9 +98,10 @@ func (e *EngineT) loop() {
 		}
 
 		e.processInput()
-
+		e.TMatrix.Lock()
 		//update currentBlock
 		if !e.Lose {
+
 			e.moveBlock(model.Down)
 
 			e.TMatrix.Unlock()
@@ -112,7 +111,7 @@ func (e *EngineT) loop() {
 			if !e.canMoveDown() {
 				e.TMatrix.StoreBlock(e.CurrentBlock)
 				e.Points += 100 * e.TMatrix.Update()
-				//e.TMatrix.Print()
+				e.TMatrix.Print()
 				e.CurrentBlock = model.GenerateRandomBlock(model.Pos{X: model.DefaultX, Y: model.DefaultY})
 			}
 		}
@@ -186,7 +185,11 @@ func (e *EngineT) handleKey(k *Key) {
 
 	for k, v := range k.DirKey {
 		if v {
-			e.moveBlock(model.Direction(k))
+			if k == model.Up {
+				e.rotateBlock(model.CounterClockWise)
+			} else {
+				e.moveBlock(model.Direction(k))
+			}
 			return
 		}
 	}

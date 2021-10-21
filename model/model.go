@@ -31,7 +31,7 @@ func GenerateMatrix(rs int, cs int) *TetrisMatrix {
 }
 
 func GenerateRandomBlock(at Pos) Block {
-	return GenerateBlockByType(BlockType(r.Intn(BlockTypeLen-1)), at)
+	return GenerateBlockByType(BlockType(r.Intn(6)), at)
 }
 
 func (m *TetrisMatrix) Clean() {

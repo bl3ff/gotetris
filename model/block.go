@@ -8,31 +8,31 @@ type BlockType int
 
 const (
 	// ****
-	I = iota
+	I BlockType = 0
 
 	// *
 	// ***
-	J
+	J BlockType = 1
 
 	//   *
 	// ***
-	L
+	L BlockType = 2
 
 	// **
 	// **
-	O
+	O BlockType = 3
 
 	//  **
 	// **
-	S
+	S BlockType = 4
 
 	//  *
 	// ***
-	T
+	T BlockType = 5
 
 	// **
 	//  **
-	Z
+	Z BlockType = 6
 
 	BlockTypeLen
 )
@@ -40,14 +40,14 @@ const (
 type BlockColor int
 
 const (
-	EmptyColor = iota
-	Red
-	Green
-	Blue
-	Yellow
-	Purple
-	Orange
-	Pink
+	EmptyColor BlockColor = 0
+	Red        BlockColor = 1
+	Green      BlockColor = 2
+	Blue       BlockColor = 3
+	Yellow     BlockColor = 4
+	Purple     BlockColor = 5
+	Orange     BlockColor = 6
+	Pink       BlockColor = 7
 
 	ColorLen
 )
@@ -55,16 +55,17 @@ const (
 type Rotation float64
 
 const (
-	ClockWise        = math.Pi / 2
-	CounterClockWise = -math.Pi / 2
+	ClockWise        Rotation = math.Pi / 2
+	CounterClockWise Rotation = -math.Pi / 2
 )
 
 type Direction int
 
 const (
-	Down = iota
-	Left
-	Right
+	Down  Direction = 0
+	Left  Direction = 1
+	Right Direction = 2
+	Up    Direction = 3
 )
 
 type Pos struct {

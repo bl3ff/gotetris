@@ -86,7 +86,7 @@ func BlockColorToRGBA(bc model.BlockColor) color.RGBA {
 }
 
 func (tw *TetrisView) sendKeyEvent(e *key.Event) {
-	if e.Direction == key.DirRelease {
+	if e.Direction == key.DirPress {
 		switch e.Code {
 		case key.CodeLeftArrow:
 			tw.Engine.SendKey(control.Key{DirKey: map[model.Direction]bool{model.Left: true}})
@@ -95,7 +95,7 @@ func (tw *TetrisView) sendKeyEvent(e *key.Event) {
 		case key.CodeRightArrow:
 			tw.Engine.SendKey(control.Key{DirKey: map[model.Direction]bool{model.Right: true}})
 		case key.CodeUpArrow:
-			tw.Engine.SendClick(control.Click{Right: false, Left: true})
+			tw.Engine.SendKey(control.Key{DirKey: map[model.Direction]bool{model.Up: true}})
 		default:
 			//log.Printf("key not supported: %s", e.Code)
 		}

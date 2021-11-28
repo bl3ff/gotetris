@@ -19,7 +19,7 @@ func TestGetByBlockType(t *testing.T) {
 		t.Fatalf("block hasn't the correct Type")
 	}
 
-	if (b.Pieces[0] != Pos{0, 1} || b.Pieces[1] != Pos{0, 2} || b.Pieces[2] != Pos{0, 3}) {
+	if (b.Pieces[0] != Pos{0, -1} || b.Pieces[1] != Pos{0, 1} || b.Pieces[2] != Pos{0, 2}) {
 		t.Fatalf("block hasn't the correct shape")
 	}
 
@@ -32,9 +32,9 @@ func TestMove(t *testing.T) {
 	if (b.Center != Pos{0, 2}) {
 		t.Fatalf("block hasn't the correct position")
 	}
-	if (b.Pieces[0] != Pos{0, 3} &&
-		b.Pieces[1] != Pos{0, 4} &&
-		b.Pieces[2] != Pos{0, 5}) {
+	if (b.Pieces[0] != Pos{0, 1} &&
+		b.Pieces[1] != Pos{0, 3} &&
+		b.Pieces[2] != Pos{0, 4}) {
 		t.Fatalf("block hasn't the correct position")
 	}
 }

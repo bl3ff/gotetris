@@ -1,0 +1,15 @@
+version: '3.3'
+services:
+  tetris:
+    build: .
+    volumes:
+      - .:/go/src/app
+      - /home/davide/.Xautority:/home/bl3ff/.Xautority
+      - /tmp/.X11-unix:/tmp/.X11-unix
+  tests:
+    build: 
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+      - .:/go/src/app
+  

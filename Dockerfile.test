@@ -1,0 +1,9 @@
+FROM golang:1.17.3
+
+WORKDIR /go/src/app
+
+COPY . .
+
+RUN go get -v ./...
+
+CMD ["go","test","./model"]

@@ -130,7 +130,7 @@ func TestCanMove(t *testing.T) {
 
 func TestCanMoveI(t *testing.T) {
 	m := GenerateMatrix(4, 4)
-	b := GenerateBlockByType(I, Pos{})
+	b := GenerateBlockByType(I, Pos{0,1})
 	if b.CanMove(m, Down, 1) {
 		t.Fatalf("block should not go down")
 	}
@@ -168,8 +168,8 @@ func TestCanRotate(t *testing.T) {
 	if !b.CanMove(m, Right, 1) {
 		t.Fatalf("block should go right")
 	}
-	if b.CanMove(m, Left, 1) {
-		t.Fatalf("block shouldn't go Left")
+	if !b.CanMove(m, Left, 1) {
+		t.Fatalf("block should go Left")
 	}
 	b.Rotate(ClockWise)
 	b.Rotate(ClockWise)
